@@ -16,6 +16,7 @@
     "babel-preset-react": "^6.24.1",
     "html-webpack-plugin": "^2.29.0",
     "path": "^0.12.7",
+    "query-string": "^5.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "transform-runtime": "0.0.0",
