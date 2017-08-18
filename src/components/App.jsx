@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import {
+    getArticles,
+} from './util/api';
 
 class App extends Component {
     render() {
