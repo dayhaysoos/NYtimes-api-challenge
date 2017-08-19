@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Header from './Header';
+import TopStories from './TopStories';
 import {
     getArticles,
 } from './util/api';
@@ -6,7 +8,10 @@ import {
 class App extends Component {
     render() {
         return(
-            <h1>Hello, World</h1>
+            <div className="container">
+                <Header />
+                <TopStories />
+            </div>
         )
     }
 }
