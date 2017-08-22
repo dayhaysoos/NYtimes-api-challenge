@@ -1,6 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App.jsx';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import Store from './redux/store';
+
 import './styles/index.scss';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './components/App.jsx';
+
+
+const store = Store;
+const rootElement = document.getElementById('root');
+
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>, rootElement 
+)

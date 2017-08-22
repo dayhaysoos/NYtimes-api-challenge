@@ -1,0 +1,13 @@
+.article-card-container {
+    border: 1px solid gray;
+    margin-bottom: 46px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    .article-card-author {
+        padding-top: 30px;
+    }
+}
+
+.article-card-container:last-child {
+    margin-bottom: 0;
+}

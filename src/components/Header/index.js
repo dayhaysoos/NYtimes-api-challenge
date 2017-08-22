@@ -7,7 +7,7 @@ class Header extends Component {
             <header>
                 <div className="banner row">
                     <h1 className="brand-title large-10">The Times</h1>
-                    <SearchInput style="large-2" />
+                    <SearchInput style="header-search" />
                 </div>
             </header>
         )
