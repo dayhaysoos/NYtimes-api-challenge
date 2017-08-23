@@ -1,3 +1,4 @@
+import debounce from 'lodash/debounce';
 import TYPES from '../actionTypes';
 import { mockdata0 } from '../../components/util/mockdata0';
 import { mockdata1 } from '../../components/util/mockdata1';
@@ -6,22 +7,28 @@ import { schema, normalize } from 'normalizr';
 
 const mockArray =[mockdata0, mockdata1];
 
+const url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=a8457610b68381085a3fff38d6a36337:6:74255139';
+
 export const getArticles = (page) => (dispatch) => {
-    fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=a8457610b68381085a3fff38d6a36337:6:74255139`, {
+    fetch(`${url}&page=${page}`, {
         method: 'GET',
         headers: {
-            'Access-Control-Allow-Origin': 'Access-Control-Allow-Origin',
             'Content-Type': 'application/json',
-            'request-no-cors': 'no-cors'
-        },
-        body: {
-            page: page,
-        },
-    }).then((response) => { response.ok ? response.json() : console.log('error')
-    }).then(data => {
+        }
+    })
+    .then((response) => {
+        console.log('initial response', response);
+        return response.json();
+    })
+    .then((data) => {
+        console.log('data', data.json());
         dispatch(getArticlesSuccess(data.response.docs))
-    }).catch(err => {
-        dispatch(getArticlesSuccess(mockArray[page].response.docs))});
+        return data.json();
+    })
+    .catch(err => {
+        console.log('USING MOCK DATA', err);
+        dispatch(getArticlesSuccess(mockArray[page].response.docs));
+    });
 }
 
 export const articlesLoading = (bool) => {
@@ -41,7 +48,6 @@ export const getArticlesSuccess = (articles) => (dispatch) => {
 
 export const getNextArticles = (page) => (dispatch) => {
     page++
-    console.log('next stuff', page)
     dispatch({
         type: 'GET_NEXT_ARTICLES',
         page

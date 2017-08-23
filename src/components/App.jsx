@@ -34,7 +34,7 @@ class App extends Component {
         }
     }
     componentDidMount() {
-        this.props.fetchData(this.props.page);
+        this.props.fetchData(this.props.page)
     }
 
 
@@ -55,7 +55,11 @@ render() {
                         )} />
                         <Route path={'/article/:_id'} render={(test) => (
                             <ArticleReader articles={this.props.articles} id={test.match.params._id} />
-                            )} />
+                        )} />
+                        <h2>
+                            <PreviousButton prevFunction={(page) => this.props.prevData(this.props.page)} />
+                            <NextButton nextFunction={(page) => this.props.nextData(this.props.page)}/>
+                        </h2>
                 </div>
             </Router>
         }

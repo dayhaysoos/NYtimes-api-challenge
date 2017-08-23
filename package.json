@@ -4,7 +4,7 @@
   "description": "Code Challenge",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "node server/server.js",
     "heroku-postbuild": "webpack -p --config ./webpack.dev.config.js --progress"
   },
   "author": "Nick DeJesus",
@@ -14,7 +14,10 @@
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
     "html-webpack-plugin": "^2.29.0",
+    "lodash": "^4.17.4",
     "normalizr": "^3.2.3",
     "path": "^0.12.7",
     "query-string": "^5.0.0",
