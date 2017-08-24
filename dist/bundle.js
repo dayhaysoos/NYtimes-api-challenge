@@ -26827,7 +26827,6 @@ var App = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-    console.log('state stuff', state);
     return {
         articles: state.articles.articles,
         isLoading: state.articles.isLoading,
@@ -29135,22 +29134,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mockArray = [_mockdata.mockdata0, _mockdata2.mockdata1];
 
-var url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=a8457610b68381085a3fff38d6a36337:6:74255139';
+var url = '/nytimes';
 
 var getArticles = exports.getArticles = function getArticles(page) {
     return function (dispatch) {
-        fetch(url + '&page=' + page, {
+        fetch(url + '/' + page, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then(function (response) {
-            console.log('initial response', response);
             return response.json();
         }).then(function (data) {
-            console.log('data', data.json());
-            dispatch(getArticlesSuccess(data.response.docs));
-            return data.json();
+            console.log('new data?', data);
+            dispatch(getArticlesSuccess(data));
+            return data;
         }).catch(function (err) {
             console.log('USING MOCK DATA', err);
             dispatch(getArticlesSuccess(mockArray[page].response.docs));
@@ -31296,7 +31294,6 @@ var Home = function Home(_ref) {
     return _react2.default.createElement(
         'div',
         { className: 'container' },
-        console.log('Home test', data),
         _react2.default.createElement(
             'div',
             { className: 'top-stories-container' },

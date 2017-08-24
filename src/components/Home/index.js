@@ -21,7 +21,6 @@ const renderArticleSections =(articles) => {
 
 const Home = ({data}) => (
     <div className="container">
-        {console.log('Home test', data)}
         <div className="top-stories-container">
             <h2 className="top-stories-title">Top Stories</h2>
             <div className="content-container">

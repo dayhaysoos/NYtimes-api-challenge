@@ -37,9 +37,6 @@ class App extends Component {
         this.props.fetchData(this.props.page)
     }
 
-
-
-
 render() {
     return (
     <div>
@@ -69,7 +66,6 @@ render() {
 }
 
 const mapStateToProps = (state) => {
-    console.log('state stuff', state);
     return {
         articles: state.articles.articles,
         isLoading: state.articles.isLoading,

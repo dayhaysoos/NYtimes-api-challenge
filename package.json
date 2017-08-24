@@ -7,6 +7,7 @@
     "start": "node server/server.js",
     "heroku-postbuild": "webpack -p --config ./webpack.dev.config.js --progress"
   },
+  "proxy": "http://localhost:8080",
   "author": "Nick DeJesus",
   "license": "ISC",
   "dependencies": {
@@ -27,6 +28,7 @@
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "request-promise": "^4.2.1",
     "transform-runtime": "0.0.0",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1",

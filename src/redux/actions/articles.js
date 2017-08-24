@@ -7,23 +7,22 @@ import { schema, normalize } from 'normalizr';
 
 const mockArray =[mockdata0, mockdata1];
 
-const url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=a8457610b68381085a3fff38d6a36337:6:74255139';
+const url = '/nytimes';
 
 export const getArticles = (page) => (dispatch) => {
-    fetch(`${url}&page=${page}`, {
+    fetch(`${url}/${page}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }
     })
     .then((response) => {
-        console.log('initial response', response);
         return response.json();
     })
     .then((data) => {
-        console.log('data', data.json());
-        dispatch(getArticlesSuccess(data.response.docs))
-        return data.json();
+        console.log('new data?', data);
+        dispatch(getArticlesSuccess(data))
+        return data;
     })
     .catch(err => {
         console.log('USING MOCK DATA', err);

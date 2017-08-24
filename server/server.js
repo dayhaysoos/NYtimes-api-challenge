@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const rp = require('request-promise');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -10,21 +11,29 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use(cors());
 
-app.get('/', function (req, res) {
-    console.log('wtf');
-    // res.set({
-    //     'Content-Type': 'application/json',
-    //     'Cross-Origin-Accept-Origin': '*',
-    //     'Access-Control-Allow-Origin': 'no-cors'
-    // })
-    res.json({"message":"Hi!"});
-});
+app.get('/nytimes/:page', (req, res) => {
+    const options = {
+        url: `http://api.nytimes.com/svc/search/v2/articlesearch.json`,
+        qs: {
+            'api-key': `a8457610b68381085a3fff38d6a36337:6:74255139`,
+            'page': `${req.params.page}`,
+        },
+        headers: {
+            'Access-Control-Allow-Origin': 'CORS'
+        },
+        json: true,
+    };
 
+    return rp(options)
+    .then((data) => {
+        res.status(200).json(data.response.docs);
+    })
+    .catch((err) => {
+        console.log('err', err);
+        res.status(400).json({error: err})
+    })
+})
 
-// All remaining requests return the React app, so it can handle routing.
-// app.use(function (request, response) {
-//     response.sendFile(path.resolve(__dirname, '../dist', 'index.html'));
-// });
 
 app.listen(PORT, function () {
     console.log(`Listening on port ${PORT}`);
