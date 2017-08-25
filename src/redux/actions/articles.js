@@ -9,8 +9,12 @@ const mockArray =[mockdata0, mockdata1];
 
 const url = '/nytimes';
 
-export const getArticles = (page) => (dispatch) => {
-    fetch(`${url}/${page}`, {
+export const getArticles = (page, search) => (dispatch) => {
+
+    let urlqs = `${url}/${page}`;
+
+    search ? urlqs = `${urlqs}/${search}` : urlqs ;
+    fetch(urlqs, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -20,7 +24,7 @@ export const getArticles = (page) => (dispatch) => {
         return response.json();
     })
     .then((data) => {
-        console.log('new data?', data);
+        console.log(data);
         dispatch(getArticlesSuccess(data))
         return data;
     })
@@ -61,4 +65,12 @@ export const getPreviousArticles = (page) => (dispatch) => {
         page
     })
     dispatch(getArticles(page));
+}
+
+export const searchArticles = (searchTerm) => (dispatch) => {
+    dispatch({
+        type: 'SEARCH_ARTICLES',
+        searchTerm
+    })
+    dispatch(getArticles(0, searchTerm));
 }

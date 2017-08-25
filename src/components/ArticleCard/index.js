@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 const ArticleCard = ({article}) => (
     <div className="article-card-container">
         <div className="side-article-title">
-            <Link to={`article/${article._id}`}>
+            <Link replace={true} to={`article/${article._id}`}>
                <h2>{article.headline.main}</h2>
             </Link>
         </div> 
         <div className="article-card-author">
-            {article.byline.original}
+            {!article.byline ? 'unknown' : article.byline.original}
         </div>
     </div>
 );

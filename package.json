@@ -4,7 +4,7 @@
   "description": "Code Challenge",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "webpack & node server/server.js",
     "heroku-postbuild": "webpack -p --config ./webpack.dev.config.js --progress"
   },
   "proxy": "http://localhost:8080",

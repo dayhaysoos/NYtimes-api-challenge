@@ -7,14 +7,14 @@ const MainArticleCard = ({mainArticle}) => {
         <div className="main-article-title-container row">
             <div className="main-article-text">
                     <h3 className="main-article-title">
-                        <Link to={`article/${mainArticle._id}`}>
+                        <Link replace={true} to={`article/${mainArticle._id}`}>
                             {mainArticle.headline.main}
                         </Link>
                     </h3>
-                <div className="main-article-author">{mainArticle.byline.original}</div>
+                <div className="main-article-author">{!mainArticle.byline ? 'unknown' : mainArticle.byline.original}</div>
             </div>
             <div className="main-article-image large-2">
-                <div className="placeholder-square"></div>
+                <div className="placeholder-square large-12"></div>
             </div>
         </div>
         <div className="main-article-body-container">
