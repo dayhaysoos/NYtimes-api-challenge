@@ -7,7 +7,7 @@ import {
     withRouter,
 } from 'react-router-dom'
 
-import { getArticles, getNextArticles, getPreviousArticles } from '../redux/actions/articles';
+import { getArticles, getNextArticles, getPreviousArticles, searchArticles } from '../redux/actions/articles';
 import Header from './Header';
 
 import MainArticleCard from './MainArticleCard';
@@ -24,19 +24,24 @@ const LoadingComponent = () => (
     <h1>Loading</h1>
 )
 
-const Testing = () => (
-    <h1>Whatever</h1>
-);
-
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            page: 0,
-        }
-    }
+
     componentDidMount() {
-        this.props.fetchData(this.props.page)
+        this.props.fetchData(this.props.page, this.props.search);
+    }
+
+    handleSearch(e, history) {
+        e.preventDefault();
+        const { searchInput } = e.target;
+        delete history.location.pathname;
+        history.push(`/search/${searchInput.value}`)
+        this.props.searchData(searchInput.value);
+    }
+    
+    handlePaginate(e) {
+        e.preventDefault();
+        const clickedPage = e.target.innerHTML;
+        this.props.nextData(clickedPage);
     }
     
     handlePaginate(e) {
@@ -46,13 +51,14 @@ class App extends Component {
     }
 
 render() {
+    console.log(this.props);
     return (
     <div>
         {
             this.props.isLoading
             ? <LoadingComponent />
             :
-            <Router>
+            <Router history={history}>
                 <div>
                     <Route exact path={'/'} render={(props) => (
                         <div>
@@ -96,15 +102,17 @@ const mapStateToProps = (state) => {
     return {
         articles: state.articles.articles,
         isLoading: state.articles.isLoading,
-        page: state.articles.page
+        page: state.articles.page,
+        search: state.articles.search
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchData: (page) => dispatch(getArticles(page)),
-        nextData: (page) => dispatch(getNextArticles(page)),
-        prevData: (page) => dispatch(getPreviousArticles(page)),
+        fetchData: (page, search) => dispatch(getArticles(page, search)),
+        nextData: (page, search) => dispatch(getNextArticles(page, search)),
+        prevData: (page, search) => dispatch(getPreviousArticles(page, search)),
+        searchData: (search) => dispatch(searchArticles(search)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

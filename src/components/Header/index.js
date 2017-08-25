@@ -8,7 +8,9 @@ class Header extends Component {
             <header>
                 <div className="banner row">
                     <h1 className="brand-title large-10">The Times</h1>
-                    <SearchInput style="header-search" />
+                    <div className="search-container large-2">
+                        <SearchInput searchFunc={this.props.searchFunc} style="header-search" />
+                    </div>
                 </div>
                 <Navigation />
             </header>

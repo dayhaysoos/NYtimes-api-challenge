@@ -3,6 +3,7 @@ const initialState = {
     getArticlesError: false,
     isLoading: true,
     page: 0,
+    search: ""
 }
 
 export const articles = (state = initialState, action) => {
@@ -18,6 +19,10 @@ export const articles = (state = initialState, action) => {
 
         case 'GET_PREVIOUS_ARTICLES':
         return Object.assign({}, state, { page: action.page });
+
+        case 'SEARCH_ARTICLES':
+        return Object.assign({}, state, {search: action.searchTerm});
+
         default:
         return state;
     }

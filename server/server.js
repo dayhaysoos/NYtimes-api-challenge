@@ -11,12 +11,13 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use(cors());
 
-app.get('/nytimes/:page', (req, res) => {
+const fetchArticles = (page, search, req, res) => {
     const options = {
         url: `http://api.nytimes.com/svc/search/v2/articlesearch.json`,
         qs: {
             'api-key': `a8457610b68381085a3fff38d6a36337:6:74255139`,
-            'page': `${req.params.page}`,
+            q: search,
+            page
         },
         headers: {
             'Access-Control-Allow-Origin': 'CORS'
@@ -24,14 +25,27 @@ app.get('/nytimes/:page', (req, res) => {
         json: true,
     };
 
-    return rp(options)
-    .then((data) => {
-        res.status(200).json(data.response.docs);
-    })
-    .catch((err) => {
-        console.log('err', err);
-        res.status(400).json({error: err})
-    })
+    return rp(options);
+}
+
+app.route('/nytimes/:page/:search').get((req, res) => {
+    console.log('with search', req.params);
+    fetchArticles(req.params.page, req.params.search, req, res)
+        .then(data => {
+            console.log(data.response.docs[0].headline);
+            res.status(200).json(data.response.docs)})
+        .catch(err => res.status(400).json(err))
+})
+
+
+
+app.get('/nytimes/:page', (req, res) => {
+    console.log('no search', req.params);
+    fetchArticles(req.params.page, req.params.search, req, res)
+        .then(data => {
+            res.status(200).json(data.response.docs)
+        })
+        .catch(err => res.status(400).json(err))
 })
 
 
