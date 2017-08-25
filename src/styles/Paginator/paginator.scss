@@ -1,0 +1,9 @@
+.paginate-container {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    .page-num {
+        width: 40px;
+    }
+}
