@@ -17,6 +17,7 @@ import PreviousButton from './PreviousButton';
 import Home from './Home';
 import ArticleReader from './ArticleReader';
 import SearchPage from './SearchPage';
+import Paginate from './paginate';
 
 
 const LoadingComponent = () => (
@@ -36,6 +37,12 @@ class App extends Component {
         history.push(`/search/${searchInput.value}`)
         this.props.searchData(searchInput.value);
     }
+    
+    handlePaginate(e) {
+        e.preventDefault();
+        const clickedPage = e.target.innerHTML;
+        this.props.nextData(clickedPage);
+    }
 
 render() {
     console.log(this.props);
@@ -54,19 +61,26 @@ render() {
                         </div>
                         
                         )} />
+
                         <Route path={'/article/:_id'} render={(props) => (
                             <ArticleReader articles={this.props.articles} id={props.match.params._id} />
                         )} />
+
                         <Route path ={'/search/:input'} render={props => (
                             <div>
                                 <Header searchFunc={e => this.handleSearch(e, props.history)} />
                                 <SearchPage data={this.props.articles}/>
                             </div>
                         )} />
+
                         <Route path={'/search/article/:_id'} render={(props) => (
                             <ArticleReader articles={this.props.articles} id={props.match.params._id} />
                         )} />
+                        <Route path={'/nothing'} render={(props) => (
+                                <Link to={'/'}><h1>This leads to nothing. Click here to go back.</h1></Link>
+                        )} />
                         <h2>
+                            <Paginate onClick={this.test} data={this.props.articles} pageState={this.props.page} pageFunc={(e) => this.handlePaginate(e)} />
                             <PreviousButton prevFunction={(page) => this.props.prevData(this.props.page)} />
                             <NextButton nextFunction={(page) => this.props.nextData(this.props.page)}/>
                         </h2>
