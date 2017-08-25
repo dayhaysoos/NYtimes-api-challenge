@@ -7617,7 +7617,7 @@ var ArticleSection = function ArticleSection(_ref) {
             { className: 'article-section-content large-9' },
             _react2.default.createElement(
                 _reactRouterDom.Link,
-                { replace: true, to: 'article/' + article._id },
+                { replace: true, to: '/article/' + article._id },
                 _react2.default.createElement(
                     'h3',
                     { className: 'article-section-title' },
@@ -26224,7 +26224,7 @@ exports = module.exports = __webpack_require__(109)(undefined);
 exports.i(__webpack_require__(250), "");
 
 // module
-exports.push([module.i, "header {\n  background-color: black; }\n\n.brand-title {\n  color: white;\n  text-align: center; }\n\n.content-container {\n  display: flex;\n  margin-bottom: 30px; }\n\n.top-stories-title {\n  padding-left: 30px; }\n\n.side-article-container {\n  max-width: 22%; }\n\n.article-card-container {\n  border: 1px solid gray;\n  margin-bottom: 46px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n  .article-card-container .article-card-author {\n    padding-top: 30px; }\n\n.article-card-container:last-child {\n  margin-bottom: 0; }\n\n.article-section-container {\n  border: 1px solid black; }\n\n.main-article-container {\n  border: 1px solid lightgray;\n  margin-right: 20px;\n  margin-left: 10px; }\n  .main-article-container .main-article-title-container {\n    background-color: lightgray;\n    margin: 0;\n    max-width: 100%; }\n    .main-article-container .main-article-title-container .main-article-text {\n      padding-left: 10px; }\n    .main-article-container .main-article-title-container .main-article-author {\n      color: white; }\n    .main-article-container .main-article-title-container .main-article-image {\n      padding-top: 30px;\n      padding-bottom: 30px;\n      margin: auto; }\n\n.placeholder-square {\n  background-color: gray;\n  width: 200px;\n  height: 200px; }\n\n.nav-bar-container {\n  background-color: white; }\n  .nav-bar-container .nav-bar {\n    list-style: none; }\n    .nav-bar-container .nav-bar li {\n      text-align: center; }\n\n.paginate-container {\n  list-style: none;\n  display: flex;\n  flex-direction: row;\n  align-items: flex-end; }\n  .paginate-container .page-num {\n    width: 40px; }\n", ""]);
+exports.push([module.i, "header {\n  background-color: black; }\n\n.brand-title {\n  color: white;\n  text-align: center; }\n\n.content-container {\n  display: flex;\n  margin-bottom: 30px; }\n\n.top-stories-title {\n  padding-left: 30px; }\n\n.side-article-container {\n  max-width: 22%; }\n\n.article-card-container {\n  border: 1px solid gray;\n  margin-bottom: 46px;\n  padding-bottom: 10px;\n  padding-left: 10px; }\n  .article-card-container .article-card-author {\n    padding-top: 30px; }\n\n.article-card-container:last-child {\n  margin-bottom: 0; }\n\n.article-section-container {\n  border: 1px solid black; }\n\n.main-article-container {\n  border: 1px solid lightgray;\n  margin-right: 20px;\n  margin-left: 10px; }\n  .main-article-container .main-article-title-container {\n    background-color: lightgray;\n    margin: 0;\n    max-width: 100%; }\n    .main-article-container .main-article-title-container .main-article-text {\n      padding-left: 10px; }\n    .main-article-container .main-article-title-container .main-article-author {\n      color: white; }\n    .main-article-container .main-article-title-container .main-article-image {\n      padding-top: 30px;\n      padding-bottom: 30px;\n      margin: auto; }\n\n.placeholder-square {\n  background-color: gray;\n  width: 200px;\n  height: 200px; }\n\n.nav-bar-container {\n  background-color: white; }\n  .nav-bar-container .nav-bar {\n    list-style: none; }\n    .nav-bar-container .nav-bar li {\n      text-align: center; }\n\n.paginate-container {\n  list-style: none;\n  display: flex;\n  flex-direction: row;\n  align-items: flex-end; }\n  .paginate-container .page-num {\n    width: 40px; }\n\n.article-reader-container {\n  text-align: center; }\n  .article-reader-container .article-reader-author {\n    margin-bottom: 30px; }\n  .article-reader-container .article-reader-body {\n    padding-top: 30px;\n    padding-left: 40px; }\n\n.next-button {\n  border: 1px solid black; }\n\n.previous-button {\n  border: 1px solid black;\n  margin-right: 30px; }\n\nform {\n  padding-top: 40px; }\n", ""]);
 
 // exports
 
@@ -26783,25 +26783,25 @@ var App = function (_Component) {
 
     _createClass(App, [{
         key: 'componentDidMount',
+
+        // dispatch action to fetch data immediately
         value: function componentDidMount() {
             this.props.fetchData(this.props.page, this.props.search);
         }
+
+        //search call to NY Times API
+
     }, {
         key: 'handleSearch',
         value: function handleSearch(e, history) {
             e.preventDefault();
             var searchInput = e.target.searchInput;
+            //delete this object every time so that you can use the search bar over and over
 
             delete history.location.pathname;
+            //push function that creates new location object
             history.push('/search/' + searchInput.value);
             this.props.searchData(searchInput.value);
-        }
-    }, {
-        key: 'handlePaginate',
-        value: function handlePaginate(e) {
-            e.preventDefault();
-            var clickedPage = e.target.innerHTML;
-            this.props.nextData(clickedPage);
         }
     }, {
         key: 'handlePaginate',
@@ -26815,10 +26815,10 @@ var App = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            console.log(this.props);
             return _react2.default.createElement(
                 'div',
                 null,
+                // check loading state, if loading state is false render everything in <Router />
                 this.props.isLoading ? _react2.default.createElement(LoadingComponent, null) : _react2.default.createElement(
                     _reactRouterDom.BrowserRouter,
                     { history: history },
@@ -26832,13 +26832,33 @@ var App = function (_Component) {
                                     _react2.default.createElement(_Header2.default, { searchFunc: function searchFunc(e) {
                                             return _this2.handleSearch(e, props.history);
                                         } }),
-                                    _react2.default.createElement(_Home2.default, { data: _this2.props.articles })
+                                    _react2.default.createElement(_Home2.default, { data: _this2.props.articles }),
+                                    _react2.default.createElement(
+                                        'h2',
+                                        null,
+                                        _react2.default.createElement(_paginate2.default, { onClick: _this2.test, data: _this2.props.articles, pageState: _this2.props.page, pageFunc: function pageFunc(e) {
+                                                return _this2.handlePaginate(e);
+                                            } }),
+                                        _react2.default.createElement(_PreviousButton2.default, { prevFunction: function prevFunction(page) {
+                                                return _this2.props.prevData(_this2.props.page);
+                                            } }),
+                                        _react2.default.createElement(_NextButton2.default, { nextFunction: function nextFunction(page) {
+                                                return _this2.props.nextData(_this2.props.page);
+                                            } })
+                                    )
                                 );
                             } }),
                         _react2.default.createElement(_reactRouterDom.Route, { path: '/article/:_id', render: function render(props) {
-                                return _react2.default.createElement(_ArticleReader2.default, { articles: _this2.props.articles, id: props.match.params._id });
+                                return _react2.default.createElement(
+                                    'div',
+                                    null,
+                                    _react2.default.createElement(_Header2.default, { searchFunc: function searchFunc(e) {
+                                            return _this2.handleSearch(e, props.history);
+                                        } }),
+                                    _react2.default.createElement(_ArticleReader2.default, { articles: _this2.props.articles, id: props.match.params._id })
+                                );
                             } }),
-                        _react2.default.createElement(_reactRouterDom.Route, { path: '/search/:input', render: function render(props) {
+                        _react2.default.createElement(_reactRouterDom.Route, { path: '/search/:_id', render: function render(props) {
                                 return _react2.default.createElement(
                                     'div',
                                     null,
@@ -26848,8 +26868,16 @@ var App = function (_Component) {
                                     _react2.default.createElement(_SearchPage2.default, { data: _this2.props.articles })
                                 );
                             } }),
-                        _react2.default.createElement(_reactRouterDom.Route, { path: '/search/article/:_id', render: function render(props) {
-                                return _react2.default.createElement(_ArticleReader2.default, { articles: _this2.props.articles, id: props.match.params._id });
+                        _react2.default.createElement(_reactRouterDom.Route, { path: '/search/:_id/article:/:_id', render: function render(props) {
+                                return _react2.default.createElement(
+                                    'div',
+                                    null,
+                                    console.log('/search/:article/:_id'),
+                                    _react2.default.createElement(_Header2.default, { searchFunc: function searchFunc(e) {
+                                            return _this2.handleSearch(e, props.history);
+                                        } }),
+                                    _react2.default.createElement(_ArticleReader2.default, { articles: _this2.props.articles, id: props.match.params._id })
+                                );
                             } }),
                         _react2.default.createElement(_reactRouterDom.Route, { path: '/nothing', render: function render(props) {
                                 return _react2.default.createElement(
@@ -26861,20 +26889,7 @@ var App = function (_Component) {
                                         'This leads to nothing. Click here to go back.'
                                     )
                                 );
-                            } }),
-                        _react2.default.createElement(
-                            'h2',
-                            null,
-                            _react2.default.createElement(_paginate2.default, { onClick: this.test, data: this.props.articles, pageState: this.props.page, pageFunc: function pageFunc(e) {
-                                    return _this2.handlePaginate(e);
-                                } }),
-                            _react2.default.createElement(_PreviousButton2.default, { prevFunction: function prevFunction(page) {
-                                    return _this2.props.prevData(_this2.props.page);
-                                } }),
-                            _react2.default.createElement(_NextButton2.default, { nextFunction: function nextFunction(page) {
-                                    return _this2.props.nextData(_this2.props.page);
-                                } })
-                        )
+                            } })
                     )
                 )
             );
@@ -29200,9 +29215,9 @@ var url = '/nytimes';
 
 var getArticles = exports.getArticles = function getArticles(page, search) {
     return function (dispatch) {
-
+        //set up query string for the url
         var urlqs = url + '/' + page;
-
+        //if there's not search tearm, return urlqs, if there is, add that term to the query string
         search ? urlqs = urlqs + '/' + search : urlqs;
         fetch(urlqs, {
             method: 'GET',
@@ -29212,10 +29227,10 @@ var getArticles = exports.getArticles = function getArticles(page, search) {
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            console.log(data);
             dispatch(getArticlesSuccess(data));
             return data;
         }).catch(function (err) {
+            //if there's an error for whatever reason, use this mock data
             console.log('USING MOCK DATA', err);
             dispatch(getArticlesSuccess(mockArray[page].response.docs));
         });
@@ -29261,6 +29276,7 @@ var getPreviousArticles = exports.getPreviousArticles = function getPreviousArti
     };
 };
 
+//when searching, reset the page state back to 0 and pass the search term to getArticles
 var searchArticles = exports.searchArticles = function searchArticles(searchTerm) {
     return function (dispatch) {
         dispatch({
@@ -31296,7 +31312,8 @@ var _reactRouterDom = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Navigation = function Navigation() {
+var Navigation = function Navigation(_ref) {
+    var homeFunc = _ref.homeFunc;
     return _react2.default.createElement(
         'div',
         { className: 'nav-bar-container container' },
@@ -31383,9 +31400,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var NextButton = function NextButton(_ref) {
     var nextFunction = _ref.nextFunction;
     return _react2.default.createElement(
-        'button',
-        { onClick: nextFunction },
-        'Next'
+        "button",
+        { className: "next-button", onClick: nextFunction },
+        "Next"
     );
 };
 
@@ -31412,7 +31429,7 @@ var PreviousButton = function PreviousButton(_ref) {
     var prevFunction = _ref.prevFunction;
     return _react2.default.createElement(
         "button",
-        { className: "previous", onClick: prevFunction },
+        { className: "previous-button", onClick: prevFunction },
         "Previous"
     );
 };
@@ -31588,33 +31605,37 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ArticleReader = function ArticleReader(props) {
+    console.log('Article Reader', props);
     var articles = props.articles,
         id = props.id;
 
     var clickedArticle = articles.filter(function (article) {
         return article._id == id;
     });
-    console.log(clickedArticle);
     return _react2.default.createElement(
-        "div",
-        { className: "article-reader-container" },
+        'div',
+        { className: 'article-reader-container' },
         _react2.default.createElement(
-            "div",
-            { className: "article-reader-title" },
-            clickedArticle[0].headline.main
+            'h2',
+            { className: 'article-reader-title' },
+            clickedArticle[0].headline.main ? clickedArticle[0].headline.main : 'some headline'
         ),
         _react2.default.createElement(
-            "div",
-            { className: "article-reader-author" },
+            'div',
+            { className: 'article-reader-author' },
             clickedArticle[0].byline.original
         ),
         _react2.default.createElement(
-            "div",
-            { className: "article-reader-content" },
-            _react2.default.createElement("div", { className: "article-reader-image" }),
+            'div',
+            { className: 'article-reader-content large-12 row' },
             _react2.default.createElement(
-                "div",
-                { className: "article-reader-body" },
+                'div',
+                { className: 'article-reader-image large-2' },
+                _react2.default.createElement('div', { className: 'placeholder-square' })
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'article-reader-body large-10' },
                 clickedArticle[0].snippet
             )
         )

@@ -7,7 +7,7 @@ const ArticleSection = ({article}) => (
             <div className="placeholder-square"></div>
         </div>
         <div className="article-section-content large-9">
-            <Link replace={true} to={`article/${article._id}`}>
+            <Link replace={true} to={`/article/${article._id}`}>
                 <h3 className="article-section-title">{article.headline.main}</h3>
             </Link>
             <p className="article-section-body">{article.snippet}</p>

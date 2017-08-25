@@ -10,9 +10,9 @@ const mockArray =[mockdata0, mockdata1];
 const url = '/nytimes';
 
 export const getArticles = (page, search) => (dispatch) => {
-
+    //set up query string for the url
     let urlqs = `${url}/${page}`;
-
+    //if there's not search tearm, return urlqs, if there is, add that term to the query string
     search ? urlqs = `${urlqs}/${search}` : urlqs ;
     fetch(urlqs, {
         method: 'GET',
@@ -24,11 +24,11 @@ export const getArticles = (page, search) => (dispatch) => {
         return response.json();
     })
     .then((data) => {
-        console.log(data);
         dispatch(getArticlesSuccess(data))
         return data;
     })
     .catch(err => {
+        //if there's an error for whatever reason, use this mock data
         console.log('USING MOCK DATA', err);
         dispatch(getArticlesSuccess(mockArray[page].response.docs));
     });
@@ -67,6 +67,7 @@ export const getPreviousArticles = (page) => (dispatch) => {
     dispatch(getArticles(page));
 }
 
+//when searching, reset the page state back to 0 and pass the search term to getArticles
 export const searchArticles = (searchTerm) => (dispatch) => {
     dispatch({
         type: 'SEARCH_ARTICLES',

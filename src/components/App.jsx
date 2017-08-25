@@ -25,25 +25,22 @@ const LoadingComponent = () => (
 )
 
 class App extends Component {
-
+    // dispatch action to fetch data immediately
     componentDidMount() {
         this.props.fetchData(this.props.page, this.props.search);
     }
 
+    //search call to NY Times API
     handleSearch(e, history) {
         e.preventDefault();
         const { searchInput } = e.target;
+        //delete this object every time so that you can use the search bar over and over
         delete history.location.pathname;
+        //push function that creates new location object
         history.push(`/search/${searchInput.value}`)
         this.props.searchData(searchInput.value);
     }
-    
-    handlePaginate(e) {
-        e.preventDefault();
-        const clickedPage = e.target.innerHTML;
-        this.props.nextData(clickedPage);
-    }
-    
+
     handlePaginate(e) {
         e.preventDefault();
         const clickedPage = e.target.innerHTML;
@@ -51,10 +48,9 @@ class App extends Component {
     }
 
 render() {
-    console.log(this.props);
     return (
     <div>
-        {
+        { // check loading state, if loading state is false render everything in <Router />
             this.props.isLoading
             ? <LoadingComponent />
             :
@@ -63,33 +59,39 @@ render() {
                     <Route exact path={'/'} render={(props) => (
                         <div>
                             <Header searchFunc={e => this.handleSearch(e, props.history)} />
-                            <Home data={this.props.articles}/>   
+                            <Home data={this.props.articles}/>
+                            <h2>
+                                <Paginate onClick={this.test} data={this.props.articles} pageState={this.props.page} pageFunc={(e) => this.handlePaginate(e)} />
+                                <PreviousButton prevFunction={(page) => this.props.prevData(this.props.page)} />
+                                <NextButton nextFunction={(page) => this.props.nextData(this.props.page)} />
+                            </h2>
                         </div>
                         
                         )} />
 
                         <Route path={'/article/:_id'} render={(props) => (
-                            <ArticleReader articles={this.props.articles} id={props.match.params._id} />
+                            <div>
+                                <Header searchFunc={e => this.handleSearch(e, props.history)} />
+                                <ArticleReader articles={this.props.articles} id={props.match.params._id} />
+                            </div>
                         )} />
-
-                        <Route path ={'/search/:input'} render={props => (
+                        <Route path ={'/search/:_id'} render={props => (
                             <div>
                                 <Header searchFunc={e => this.handleSearch(e, props.history)} />
                                 <SearchPage data={this.props.articles}/>
                             </div>
                         )} />
-
-                        <Route path={'/search/article/:_id'} render={(props) => (
-                            <ArticleReader articles={this.props.articles} id={props.match.params._id} />
+                        <Route path={'/search/:_id/article:/:_id'} render={props => (
+                            <div>
+                                {console.log('/search/:article/:_id')}
+                                
+                                <Header searchFunc={e => this.handleSearch(e, props.history)} />
+                                <ArticleReader articles={this.props.articles} id={props.match.params._id} />
+                            </div>
                         )} />
                         <Route path={'/nothing'} render={(props) => (
                                 <Link to={'/'}><h1>This leads to nothing. Click here to go back.</h1></Link>
                         )} />
-                        <h2>
-                            <Paginate onClick={this.test} data={this.props.articles} pageState={this.props.page} pageFunc={(e) => this.handlePaginate(e)} />
-                            <PreviousButton prevFunction={(page) => this.props.prevData(this.props.page)} />
-                            <NextButton nextFunction={(page) => this.props.nextData(this.props.page)}/>
-                        </h2>
                 </div>
             </Router>
         }
